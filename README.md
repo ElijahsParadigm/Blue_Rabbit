@@ -15,8 +15,8 @@ The data used in the attached datasets were collected and provided to the NYC Ta
 Link to the site [TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 
 ### **Data Dictonary**
-* [Green Taxi Trip Records](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf)
-* [Yellow Taxi Trip Records](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf)
+* [Green Taxi Trip Records](data_dictionary_trip_records_green.pdf)
+* [Yellow Taxi Trip Records](data_dictionary_trip_records_yellow.pdf)
 * [Weather API Records](https://open-meteo.com/en/docs)
 
 
