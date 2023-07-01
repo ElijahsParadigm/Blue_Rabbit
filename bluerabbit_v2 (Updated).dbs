@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="test1" id="Project-1029" database="LogicalDesign" >
+	<schema name="INSTANCE" catalogname="test1" >
+		<table name="Dim_Date" prior="Entity" >
+			<column name="DateKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="Day" prior="DayOfWeek" type="INT" jt="4" />
+			<column name="DayOfWeek" type="CHAR" length="20" jt="1" />
+			<column name="Month" type="CHAR" length="20" jt="1" />
+			<column name="Year" type="INT" jt="4" />
+			<column name="Hour" type="INT" jt="4" />
+			<column name="DateISO" type="DATE" jt="91" />
+			<index name="pk_Dim_Date" unique="PRIMARY_KEY" >
+				<column name="DateKey" />
+			</index>
+		</table>
+		<table name="Dim_Location" prior="Entity" >
+			<column name="LocationKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="ZipCode" type="INT" jt="4" />
+			<column name="City" type="CHAR" length="100" jt="1" />
+			<column name="Borough" type="VARCHAR" length="100" jt="12" />
+			<column name="State" type="VARCHAR" length="100" jt="12" />
+			<column name="Latitude" type="VARCHAR" length="100" jt="12" />
+			<column name="Longitude" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Dim_Location" unique="PRIMARY_KEY" >
+				<column name="LocationKey" />
+			</index>
+		</table>
+		<table name="Dim_PaymentType" prior="Entity" >
+			<column name="PaymentTypeKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="PaymentTypeName" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Dim_PaymentType" unique="PRIMARY_KEY" >
+				<column name="PaymentTypeKey" />
+			</index>
+		</table>
+		<table name="Dim_TaxiType" prior="Entity" >
+			<column name="TaxiTypeKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="TaxiTypeName" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Dim_TaxiType" unique="PRIMARY_KEY" >
+				<column name="TaxiTypeKey" />
+			</index>
+		</table>
+		<table name="Dim_TripType" prior="Entity" >
+			<column name="TripTypeKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="TripType" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Dim_TripType" unique="PRIMARY_KEY" >
+				<column name="TripTypeKey" />
+			</index>
+		</table>
+		<table name="Fact_Traffic" prior="Entity" >
+			<column name="TrafficKey" type="BIGINT" length="100" jt="-5" mandatory="y" />
+			<column name="TaxiTypeKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="PaymentTypeKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="TripTypeKey" type="INT" length="100" jt="4" mandatory="y" />
+			<column name="TripDistance" type="INT" jt="4" />
+			<column name="FareAmount" type="DECIMAL" jt="3" />
+			<column name="PaymentType" type="VARCHAR" length="100" jt="12" />
+			<column name="TollAmount" type="DECIMAL" jt="3" />
+			<column name="TipAmount" type="DECIMAL" jt="3" />
+			<column name="MtaTax" type="DECIMAL" jt="3" />
+			<column name="CongestionSurcharge" type="DECIMAL" jt="3" />
+			<column name="Temperature" type="DECIMAL" jt="3" />
+			<column name="Humidity" type="DECIMAL" jt="3" />
+			<column name="Rain" type="DECIMAL" jt="3" />
+			<column name="Snowfall" type="DECIMAL" jt="3" />
+			<column name="Cloudcover" type="DECIMAL" jt="3" />
+			<column name="Windspeed" type="DECIMAL" jt="3" />
+			<column name="IPEP_PU_DateTime" type="INT" jt="4" />
+			<column name="IPEP_DO_DateTime" type="INT" jt="4" />
+			<column name="TPEP_PU_DateTime" type="INT" jt="4" />
+			<column name="TPEP_DO_DateTime" type="INT" jt="4" />
+			<column name="PU_LocationID" type="INT" jt="4" />
+			<column name="DO_LocationID" type="INT" jt="4" />
+			<column name="RateCodeID" type="INT" jt="4" />
+			<index name="pk_Fact_Traffic" unique="PRIMARY_KEY" >
+				<column name="TrafficKey" />
+			</index>
+			<index name="unq_TaxiTypeKey" unique="UNIQUE_INDEX" >
+				<column name="TaxiTypeKey" />
+			</index>
+			<index name="unq_PaymentTypeKey" unique="UNIQUE_INDEX" >
+				<column name="PaymentTypeKey" />
+			</index>
+			<index name="unq_TripTypeKey" unique="UNIQUE_INDEX" >
+				<column name="TripTypeKey" />
+			</index>
+			<fk name="fk_fact_traffic_dim_date" to_schema="test1.INSTANCE" to_table="Dim_Date" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="IPEP_PU_DateTime" pk="DateKey" />
+			</fk>
+			<fk name="fk_fact_traffic_dim_location" to_schema="test1.INSTANCE" to_table="Dim_Location" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="PU_LocationID" pk="LocationKey" />
+			</fk>
+			<fk name="fk_fact_traffic_dim_location_1" to_schema="test1.INSTANCE" to_table="Dim_Location" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="DO_LocationID" pk="LocationKey" />
+			</fk>
+			<fk name="fk_fact_traffic_dim_date_1" to_schema="test1.INSTANCE" to_table="Dim_Date" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="IPEP_DO_DateTime" pk="DateKey" />
+			</fk>
+			<fk name="fk_fact_traffic_dim_date_2" to_schema="test1.INSTANCE" to_table="Dim_Date" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="TPEP_PU_DateTime" pk="DateKey" />
+			</fk>
+			<fk name="fk_fact_traffic_dim_date_3" to_schema="test1.INSTANCE" to_table="Dim_Date" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="TPEP_DO_DateTime" pk="DateKey" />
+			</fk>
+			<fk name="fk_fact_traffic_dim_taxitype" to_schema="test1.INSTANCE" to_table="Dim_TaxiType" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="TaxiTypeKey" pk="TaxiTypeKey" />
+			</fk>
+			<fk name="fk_fact_traffic" to_schema="test1.INSTANCE" to_table="Dim_PaymentType" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="PaymentTypeKey" pk="PaymentTypeKey" />
+			</fk>
+			<fk name="fk_fact_traffic_dim_triptype" to_schema="test1.INSTANCE" to_table="Dim_TripType" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="TripTypeKey" pk="TripTypeKey" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-2650" confirmed="y" show_column_type="y" show_relation="columns" >
+		<entity schema="test1.INSTANCE" name="Dim_Date" color="C1D8EE" x="944" y="96" />
+		<entity schema="test1.INSTANCE" name="Dim_Location" color="C1D8EE" x="944" y="432" />
+		<entity schema="test1.INSTANCE" name="Dim_PaymentType" color="C1D8EE" x="48" y="576" />
+		<entity schema="test1.INSTANCE" name="Dim_TaxiType" color="C1D8EE" x="64" y="192" />
+		<entity schema="test1.INSTANCE" name="Dim_TripType" color="C1D8EE" x="400" y="592" />
+		<entity schema="test1.INSTANCE" name="Fact_Traffic" color="C1D8EE" x="608" y="48" />
+		<callout x="48" y="48" pointer="Round" >
+			<comment><![CDATA[This is a layout - a diagram with tools.
+- Create new entities by right-clicking the layout. 
+- Double-click entity headers to edit.
+- For a better understanding of the schema, create multiple layouts.
+- Deploy the model into the database by converting it first to the physical design.]]></comment>
+		</callout>
+	</layout>
+</project>
